@@ -1,0 +1,31 @@
+{
+    "name": "serj/sortableTree",
+    "type": "yii2-extension",
+    "description": "A set of classes for Yii2 to create and maintain a tree.",
+    "license": "MIT",
+    "keywords": [
+        "yii",
+        "yii2",
+        "yii 2",
+        "sortable tree",
+        "tree structure",
+        "storing tree data in a atabase",
+        "storing hierarchical data"
+    ],
+    "authors": [
+        {
+            "name": "Sergey Onishchenko",
+            "email": "10111282@mail.ru"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "yiisoft/yii2": ">=2.0.6",
+        "serj/sortable": "~1.2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "serj\\sortableTree\\": "src/"
+        }
+    }
+}
