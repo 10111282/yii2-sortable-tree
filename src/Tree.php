@@ -3,13 +3,10 @@
 namespace serj\sortableTree;
 
 use serj\sortable\Sortable;
-use yii\base\Event;
-use yii\base\Model;
 use yii\db\ActiveQuery;
 use yii\db\Expression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
-use yii\web\NotFoundHttpException;
 
 
 class Tree extends RecordTreeData
@@ -538,7 +535,8 @@ class Tree extends RecordTreeData
      * @param null|int $depth
      * @param bool $indexById If true then array will be indexed with item's ids.
      * @return array
-     * @throws NotFoundHttpException
+     * @return array|\yii\db\ActiveRecord[]
+     * @throws SortableTreeException
      */
     private function flatTree(
         int $id,
