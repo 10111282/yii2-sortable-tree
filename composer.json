@@ -1,6 +1,6 @@
 {
-    "name": "serj/sortableTree",
-    "type": "yii2-extension",
+    "name": "serj/sortable-tree",
+    "type": "library",
     "description": "A set of classes for Yii2 to create and maintain a tree.",
     "license": "MIT",
     "keywords": [
