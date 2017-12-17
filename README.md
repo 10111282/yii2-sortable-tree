@@ -11,7 +11,7 @@ $ composer require serj/sortable-tree "~1.0.0"
 ```
 To create database tables apply a migration.
 ```bash
-./yii migrate --migrationPath=@app/vendor/serj/sortableTree/migrations
+./yii migrate --migrationPath=@app/vendor/serj/sortable-tree/migrations
 ```
 ## Usage
 ### Adding a root
@@ -225,4 +225,18 @@ For deletion use the same method as above.
 ```php
 Tree::deleteRecursive(1);
 ```
-
+Tree class triggers a set of events, which might be useful.
+```php
+    const EVENT_AFTER_ADD = 'tree.after_add';
+    const EVENT_BEFORE_MOVE = 'tree.before_move';
+    const EVENT_AFTER_MOVE = 'tree.after_move';
+    const EVENT_BEFORE_DELETE = 'tree.before_delete';
+    const EVENT_AFTER_DELETE = 'tree.after_delete';
+    const EVENT_BEFORE_TREE_QUERY = 'tree.before_tree_query';
+```
+For example to get ids of the items before they are deleted:
+```php
+\Yii::$app->on(Tree::EVENT_BEFORE_DELETE, function (\serj\sortableTree\EventTree $event) {
+    print_r($event->senderData['ids']);
+});
+```
