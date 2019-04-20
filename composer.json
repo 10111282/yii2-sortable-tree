@@ -20,8 +20,11 @@
     ],
     "require": {
         "php": ">=7.0",
-        "yiisoft/yii2": ">=2.0.6",
+        "yiisoft/yii2": "~2.0.6",
         "serj/sortable": "~1.2.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.5"
     },
     "autoload": {
         "psr-4": {

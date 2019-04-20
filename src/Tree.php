@@ -19,41 +19,33 @@ class Tree extends RecordTreeData
     const EVENT_BEFORE_TREE_QUERY = 'tree.before_tree_query';
 
     /**
-     * @var array
-     */
-    public $children = [];
-
-    /**
      * @var Sortable
      */
-    protected $sortManager;
+    protected static $sortManager;
 
     /**
      * @param Sortable $instance
-     * @return $this
      */
-    public function setSortManager(Sortable $instance)
+    public static function setSortManager(Sortable $instance)
     {
-        $this->sortManager = $instance;
-
-        return $this;
+        self::$sortManager = $instance;
     }
 
     /**
      * @return Sortable
      */
-    public function getSortManager()
+    public static function getSortManager()
     {
-        if (!$this->sortManager) {
-            $this->sortManager = new Sortable([
+        if (!self::$sortManager) {
+            self::$sortManager = new Sortable([
                 'targetTable' => static::tableName(),
                 'pkColumn' => 'id',
                 'srtColumn' => 'sort',
-                'grpColumn' => 'parent_id'
+                'grpColumn' => 'parent_id',
             ]);
         }
 
-        return $this->sortManager;
+        return self::$sortManager;
     }
 
     /**
@@ -87,10 +79,10 @@ class Tree extends RecordTreeData
             $model->level = $level;
 
             if (!$targetId || !$position) {
-                $sortVal = $model->getSortManager()->getSortValAfterAll($model->parent_id);
+                $sortVal = $model::getSortManager()->getSortValAfterAll($model->parent_id);
             }
             else {
-                $sortVal = $model->getSortManager()->getSortVal($targetId, $position, $model->parent_id);
+                $sortVal = $model::getSortManager()->getSortVal($targetId, $position, $model->parent_id);
             }
             $model->sort = $sortVal;
 
@@ -148,10 +140,10 @@ class Tree extends RecordTreeData
 
         try {
             if (!$targetId || !$position) {
-                $sortVal = $model->getSortManager()->getSortValAfterAll($newParentId);
+                $sortVal = $model::getSortManager()->getSortValAfterAll($newParentId);
             }
             else {
-                $sortVal = $model->getSortManager()->getSortVal($targetId, $position, $newParentRecord->id);
+                $sortVal = $model::getSortManager()->getSortVal($targetId, $position, $newParentRecord->id);
             }
 
             $event = new EventTree([

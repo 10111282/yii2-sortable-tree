@@ -240,3 +240,18 @@ For example to get ids of the items before they are deleted:
     print_r($event->senderData['ids']);
 });
 ```
+
+
+## Using with MySql database (by default it's Postgres)
+
+```php
+Tree::setSortManager(
+    new Sortable([
+        'targetTable' => Tree::tableName(),
+        'pkColumn' => 'id',
+        'srtColumn' => 'sort',
+        'grpColumn' => 'parent_id',
+        'databaseDriver' => Sortable::DB_DRIVER_MYSQL
+    ])
+); 
+```

@@ -23,9 +23,3 @@ CREATE TABLE tree_structure (
   parent INTEGER NOT NULL,
   child INTEGER NOT NULL
 );
-
-
-
-
-
-

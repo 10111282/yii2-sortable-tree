@@ -1,7 +1,7 @@
 <?php
 
 
-class SortableTreeExtendedTest extends \Codeception\Test\Unit
+class SortableTreeExtendedBase extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -25,6 +25,7 @@ class SortableTreeExtendedTest extends \Codeception\Test\Unit
         $r1 = TreeExtended::addItem(0, null, null , ['title' => 'Root']);
         $r1_1 = TreeExtended::addItem($r1->id, null, null, ['title' => '1.1']);
         $r1_2 = TreeExtended::addItem($r1->id, null, null, ['title' => '1.2']);
+        //var_dump($r1->id,  $r1_2->id); exit;
         $r1_3 = TreeExtended::addItem($r1->id,  $r1_2->id, 'before', ['title' => '1.3']);
         $r1_4 = TreeExtended::addItem($r1->id,  $r1_3->id, 'after', ['title' => '1.4']);
         $r2_1 = TreeExtended::addItem($r1_4->id,  null, null, ['title' => '2.1']);

@@ -3,7 +3,7 @@
 use serj\sortableTree\Tree;
 use serj\sortableTree\TreeExtended;
 
-class SortableTreeTest extends \Codeception\Test\Unit
+class SortableTreeBase extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -12,9 +12,8 @@ class SortableTreeTest extends \Codeception\Test\Unit
 
 
     protected function _before() {}
-    
-    protected function _after() {}
 
+    protected function _after() {}
 
     protected function createTree()
     {
@@ -31,7 +30,7 @@ class SortableTreeTest extends \Codeception\Test\Unit
         $r1_4 = Tree::addItem($r1->id);
         $r2_1 = Tree::addItem($r1_3->id);
     }
-    
+
     public function testCreateTree()
     {
         // 1
@@ -40,10 +39,12 @@ class SortableTreeTest extends \Codeception\Test\Unit
         //   5
         //     6
         // 3
+
         $r1 = Tree::addItem(0);
         $this->assertTrue($r1->parent_id === 0);
 
         $r1_1 = Tree::addItem($r1->id);
+
         $this->assertTrue($r1_1->parent_id === $r1->id);
 
         $r1_2 = Tree::addItem($r1->id);
@@ -60,9 +61,9 @@ class SortableTreeTest extends \Codeception\Test\Unit
 
         $tree = Tree::getDescendingTree();
 
-        $this->assertTrue($tree[0]['children'][2]['children'][0]['id'] === $r2_1->id);
+        $this->assertTrue((int)$tree[0]['children'][2]['children'][0]['id'] === $r2_1->id);
     }
-    
+
     public function testMoveTo()
     {
         $this->createTree();
@@ -78,7 +79,7 @@ class SortableTreeTest extends \Codeception\Test\Unit
         $this->assertTrue($r->parent_id === 3);
 
         $tree = Tree::getDescendingTree();
-        $this->assertTrue($tree[0]['children'][1]['children'][0]['children'][0]['id'] === 6);
+        $this->assertTrue((int)$tree[0]['children'][1]['children'][0]['children'][0]['id'] === 6);
 
 
         //Expected result
@@ -92,9 +93,9 @@ class SortableTreeTest extends \Codeception\Test\Unit
         $this->assertTrue($r->parent_id === 4);
 
         $tree = Tree::getDescendingTree();
-        $this->assertTrue($tree[0]['children'][1]['children'][0]['children'][0]['id'] === 5);
+        $this->assertTrue((int)$tree[0]['children'][1]['children'][0]['children'][0]['id'] === 5);
     }
-    
+
     public function testDeleteRecursive()
     {
         $this->createTree();
@@ -105,22 +106,22 @@ class SortableTreeTest extends \Codeception\Test\Unit
         $tree = Tree::getDescendingFlatTree(1);
         $this->assertTrue(count($tree) === 4);
     }
-    
+
     public function testGetDescendingTree()
     {
         $this->createTree();
 
         $tree = Tree::getDescendingTree(1);
 
-        $this->assertTrue($tree['id'] === 1);
-        $this->assertTrue($tree['children'][0]['id'] === 2);
-        $this->assertTrue($tree['children'][1]['id'] === 3);
-        $this->assertTrue($tree['children'][2]['id'] === 4);
-        $this->assertTrue($tree['children'][2]['children'][0]['id'] === 6);
-        $this->assertTrue($tree['children'][3]['id'] === 5);
+        $this->assertTrue((int)$tree['id'] === 1);
+        $this->assertTrue((int)$tree['children'][0]['id'] === 2);
+        $this->assertTrue((int)$tree['children'][1]['id'] === 3);
+        $this->assertTrue((int)$tree['children'][2]['id'] === 4);
+        $this->assertTrue((int)$tree['children'][2]['children'][0]['id'] === 6);
+        $this->assertTrue((int)$tree['children'][3]['id'] === 5);
 
     }
-    
+
     public function testGetDescendingFlatTree()
     {
         $this->createTree();
@@ -128,32 +129,32 @@ class SortableTreeTest extends \Codeception\Test\Unit
         $tree = Tree::getDescendingFlatTree(1);
 
         $this->assertTrue(count($tree) === 6);
-        $this->assertTrue($tree[0]['id'] === 1);
-        $this->assertTrue($tree[5]['id'] === 6);
+        $this->assertTrue((int)$tree[0]['id'] === 1);
+        $this->assertTrue((int)$tree[5]['id'] === 6);
     }
-    
+
     public function testGetAscendingFlatTree()
     {
         $this->createTree();
 
         $tree = Tree::getAscendingFlatTree(6);
         $this->assertTrue(count($tree) === 3);
-        $this->assertTrue($tree[0]['id'] === 1);
-        $this->assertTrue($tree[1]['id'] === 4);
-        $this->assertTrue($tree[2]['id'] === 6);
+        $this->assertTrue((int)$tree[0]['id'] === 1);
+        $this->assertTrue((int)$tree[1]['id'] === 4);
+        $this->assertTrue((int)$tree[2]['id'] === 6);
     }
-    
+
     public function testGetAscendingTree()
     {
         $this->createTree();
 
         $tree = Tree::getAscendingTree(6);
 
-        $this->assertTrue($tree['id'] === 1);
-        $this->assertTrue($tree['children'][0]['id'] === 4);
-        $this->assertTrue($tree['children'][0]['children'][0]['id'] === 6);
+        $this->assertTrue((int)$tree['id'] === 1);
+        $this->assertTrue((int)$tree['children'][0]['id'] === 4);
+        $this->assertTrue((int)$tree['children'][0]['children'][0]['id'] === 6);
     }
-    
+
     public function testMultipleRoots()
     {
         $this->createTree();
@@ -168,10 +169,10 @@ class SortableTreeTest extends \Codeception\Test\Unit
         $this->assertTrue(count($trees) === 2);
 
         $roots = Tree::getRoots();
-        $this->assertTrue($roots[0] === 1);
-        $this->assertTrue($roots[1] === 7);
+        $this->assertTrue((int)$roots[0] === 1);
+        $this->assertTrue((int)$roots[1] === 7);
     }
-    
+
     public function testGetItemsByLevel()
     {
         $this->createTree();
@@ -190,23 +191,23 @@ class SortableTreeTest extends \Codeception\Test\Unit
     {
         $this->createTree();
 
-        $this->assertTrue(Tree::getLevelById(1) === 0);
-        $this->assertTrue(Tree::getLevelById(4) === 1);
-        $this->assertTrue(Tree::getLevelById(6) === 2);
+        $this->assertTrue((int)Tree::getLevelById(1) === 0);
+        $this->assertTrue((int)Tree::getLevelById(4) === 1);
+        $this->assertTrue((int)Tree::getLevelById(6) === 2);
     }
-    
+
     public  function testEvents()
     {
         $r = Tree::addItem();
         $r2 = Tree::addItem($r->id);
-        
+
         \Yii::$app->on(Tree::EVENT_AFTER_ADD, function (\yii\base\Event $event) {
             $this->assertTrue($event->sender->id === 3);
             $this->assertTrue($event->senderData['target_id'] === 2);
             $this->assertTrue($event->senderData['position'] === 'before');
         });
         $r3 = Tree::addItem($r->id, $r2->id, 'before');
-        
+
         \Yii::$app->on(Tree::EVENT_BEFORE_MOVE, function (\yii\base\Event $event) {
             $this->assertTrue($event->senderData['id'] === 3);
             $this->assertTrue($event->senderData['new_parent_id'] === 1);
@@ -217,12 +218,12 @@ class SortableTreeTest extends \Codeception\Test\Unit
             $this->assertTrue($event->sender->id === 3);
             $this->assertTrue($event->sender->parent_id === 1);
         });
-        
+
         \Yii::$app->on(Tree::EVENT_BEFORE_TREE_QUERY, function (\yii\base\Event $event) {
             $this->assertTrue(get_class($event->senderData['query']) === 'yii\db\ActiveQuery');
         });
         Tree::getDescendingFlatTree(1);
-        
+
         \Yii::$app->on(Tree::EVENT_BEFORE_DELETE, function (\yii\base\Event $event) {
             $this->assertTrue(count($event->senderData['ids']) === 3);
         });
